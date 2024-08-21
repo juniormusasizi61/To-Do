@@ -89,3 +89,30 @@ function UpdateToDoItems(e){
         }
 }
 
+
+//update on selection 
+function UpdateOnSelectItems(){
+    let IsPresent = false;
+    todo.forEach((element)=>{
+        if(element.item == todoValue.value){
+            IsPresent = true;
+        }
+    })
+
+    if(IsPresent){
+        setAlertMessage("This item already appears in the list ");
+        return;
+    }
+    todo.forEach((element)=>{
+        if(element.item == updateText.innerText.trim()){
+            element.item = todoValue.value;
+        }
+    });
+    setLocalStorage();
+
+    updateText.innerText = todoValue.value;
+    addUpdate.setAttribute("oonclick","CreateToDoItems()");
+    addUpdate.setAttribute("src","./img/plus.png");
+    todoValue.value = "";
+    setAlertMessage("Todo item Updated Successfully!");
+}
