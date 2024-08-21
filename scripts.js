@@ -28,9 +28,11 @@ function CreateToDoItems(){
         return;
     }
     let li = document.createElement('li');
-    const todoItems = '<div title = "hit doudle click and complete' ondblclick = "CompletedToDoItems(this)">${todoValue.value}</div><div><img class ="edit to-do controls" onclick="UpdateToDoItems(this)" src = "./img/pencil.png" />
+    const todoItems = `<div title = "hit doudle click and complete" ondblclick = "CompletedToDoItems(this)">${todoValue.value}</div><div>
+    <img class ="edit to-do controls" onclick="UpdateToDoItems(this)" src = "./img/pencil.png" />
     <img class = "delete todo-controls" onclick="DeleteToDoItems(this)" src = "./img/delete.png"/>
     </div>
+    <div>`;
 
     li.innerHTML = todoItems;
     listItems.appendChild(li);
