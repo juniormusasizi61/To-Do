@@ -75,3 +75,17 @@ function ReadToDoItems(){
     });
 }
 ReadToDoItems();
+
+
+//update todo items 
+function UpdateToDoItems(e){
+    if(
+        e.parentElement.querySelector("div").style.textDecoration === ""){
+            todoValue.value = e.parentElement.parentElement.querySelector("div").innerText;
+            updateText = e.parentElement.parentElement.querySelector("div");
+            addUpdate.setAttribute("onclick","UpdateOnSelectItems()");
+            addUpdate.setAttribute("src", "./img/refresh.png");
+            todoValue.focus();
+        }
+}
+
