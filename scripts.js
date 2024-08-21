@@ -18,7 +18,7 @@ function CreateToDoItems(){
         todoValue.focus();
     }else{
         let IsPresent = false;
-        todo.forEach(element => {
+        todo.forEach((element) => {
             if(element.item == todoValue.value){
                 IsPresent = true;
             }
