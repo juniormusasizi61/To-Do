@@ -112,13 +112,13 @@ li.deleted-item {
 
 //hide the mesaage once the user finishes the activity
 .toggleMe {
-    animation: hideMe 5s forwards;
+  animation: hideMe 5s forwards;
+}
+@keyframes hideMe {
+  0% {
+    opacity: 1;
   }
-  @keyframes hideMe {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
+  100% {
+    opacity: 0;
   }
+}
