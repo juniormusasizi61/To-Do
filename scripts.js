@@ -1,18 +1,19 @@
 const todoValue = document.getElementById("todoText");
 const todoAlert = document.getElementById("Alert");
-const listItem = document.getElementById("list-items");
+const listItems = document.getElementById("list-items");
 const addUpdate = document.getElementById("AddUpdateClick");
 
 //declare local storage object
 let todo = JSON.parse(localStorage.getItem("todo-list"));
 if (!todo) {
-  todo = [];3 
+  todo = [];
 }
 
 ///CRUD funtions
 function CreateToDoItems() {
+  let todoValue = document.getElementById('todoText');
   if (todoValue.value === "") {
-    todoAlert.innerText = "please enter your task!...";
+    todoAlert.innerText = "Please enter your todo text!";
     todoValue.focus();
   } else {
     let IsPresent = false;
@@ -21,23 +22,19 @@ function CreateToDoItems() {
         IsPresent = true;
       }
     });
+
     if (IsPresent) {
-      setAlertMessage("This item already exists on the list!");
+      setAlertMessage("This item already present in the list!");
       return;
     }
-    let li = document.createElement("li");
-    const todoItems = `<div title = "hit doudle click and complete" ondblclick = "CompletedToDoItems(this)">${todoValue.value}</div><div>
-    <img class ="edit to-do controls" onclick="UpdateToDoItems(this)" src = "./img/pencil.png" />
-    <img class = "delete todo-controls" onclick="DeleteToDoItems(this)" src = "./img/delete.png"/>
-    </div>
-    <div>`;
 
+    let li = document.createElement("li");
+    const todoItems = `<div title="Hit Double Click and Complete" ondblclick="CompletedToDoItems(this)">${todoValue.value}</div><div>
+                    <img class="edit todo-controls" onclick="UpdateToDoItems(this)" src="/images/pencil.png" />
+                    <img class="delete todo-controls" onclick="DeleteToDoItems(this)" src="/images/delete.png" /></div></div>`;
     li.innerHTML = todoItems;
     listItems.appendChild(li);
 
-    if (!todo) {
-      todo = [];
-    }
     let itemList = { item: todoValue.value, status: false };
     todo.push(itemList);
     setLocalStorage();
