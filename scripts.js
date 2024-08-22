@@ -1,12 +1,12 @@
 const todoValue = document.getElementById("todoText");
 const todoAlert = document.getElementById("Alert");
-const listitem = document.getElementById("list-items");
+const listItem = document.getElementById("list-items");
 const addUpdate = document.getElementById("AddUpdateClick");
 
 //declare local storage object
 let todo = JSON.parse(localStorage.getItem("todo-list"));
 if (!todo) {
-  todo = [];
+  todo = [];3 
 }
 
 ///CRUD funtions
@@ -156,17 +156,15 @@ function CompletedToDoItems(e) {
   }
 }
 
-
-function setLocalStorage(){
-    localStorage.setItem("todo-list", JSON.stringify(todo));
+function setLocalStorage() {
+  localStorage.setItem("todo-list", JSON.stringify(todo));
 }
 
-
-//set alert message based on the user's activity 
-function setAlertMessage(message){
-    todoAlert.removeAttribute("class");
-    todoAlert.innerText = message;
-    setTimeout(()=>{
-        todoAlert.classList.add("togggleMe");
-    },1000);
+//set alert message based on the user's activity
+function setAlertMessage(message) {
+  todoAlert.removeAttribute("class");
+  todoAlert.innerText = message;
+  setTimeout(() => {
+    todoAlert.classList.add("togggleMe");
+  }, 1000);
 }
