@@ -109,3 +109,16 @@ li.deleted-item {
     transform: translateY(600px) rotateZ(90deg);
   }
 }
+
+//hide the mesaage once the user finishes the activity
+.toggleMe {
+    animation: hideMe 5s forwards;
+  }
+  @keyframes hideMe {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
