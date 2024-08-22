@@ -160,3 +160,13 @@ function CompletedToDoItems(e) {
 function setLocalStorage(){
     localStorage.setItem("todo-list", JSON.stringify(todo));
 }
+
+
+//set alert message based on the user's activity 
+function setAlertMessage(message){
+    todoAlert.removeAttribute("class");
+    todoAlert.innerText = message;
+    setTimeout(()=>{
+        todoAlert.classList.add("togggleMe");
+    },1000);
+}
