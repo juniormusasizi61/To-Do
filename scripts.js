@@ -155,3 +155,8 @@ function CompletedToDoItems(e) {
     setAlertMessage("Todo item Completed Successfully!");
   }
 }
+
+
+function setLocalStorage(){
+    localStorage.setItem("todo-list", JSON.stringify(todo));
+}
