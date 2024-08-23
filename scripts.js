@@ -4,91 +4,88 @@ const listItems = document.getElementById("list-items");
 const addUpdate = document.getElementById("AddUpdateClick");
 
 //declare local storage object
-let todo = JSON.parse(localStorage.getItem("todo-list"));
-if (!todo) {
-  todo = [];
-}
+let todo = JSON.parse(localStorage.getItem("todo-list")) || [];
+
+
 
 ///CRUD funtions
 function CreateToDoItems() {
-  let todoValue = document.getElementById('todoText');
-  if (todoValue.value === "") {
-    todoAlert.innerText = "Please enter your todo text!";
+  //alert if input is empty
+  
+  if (todoValue.value.trim() === "") {
+    //todoAlert.innerText = "Please enter your todo text!";
+    setAlertMessage("please enter your todo text!");
     todoValue.focus();
-  } else {
-    let IsPresent = false;
-    todo.forEach((element) => {
-      if (element.item == todoValue.value) {
-        IsPresent = true;
-      }
-    });
+    return;
+  }
+  const IsPresent = todo.some(item=>item.item === todoValue.value.trim());
+  //  else {
+  //   let IsPresent = false;
+  //   todo.forEach((element) => {
+  //     if (element.item == todoValue.value) {
+  //       IsPresent = true;
+  //     }
+    // });
 
     if (IsPresent) {
       setAlertMessage("This item already present in the list!");
       return;
     }
-
+//create a new list item 
     let li = document.createElement("li");
     const todoItems = `<div title="Hit Double Click and Complete" ondblclick="CompletedToDoItems(this)">${todoValue.value}</div><div>
-                    <img class="edit todo-controls" onclick="UpdateToDoItems(this)" src="/images/pencil.png" />
-                    <img class="delete todo-controls" onclick="DeleteToDoItems(this)" src="/images/delete.png" /></div></div>`;
+                    <img class="edit todo-controls" onclick="UpdateToDoItems(this)" src="./img/pencil.png" />
+                    <img class="delete todo-controls" onclick="DeleteToDoItems(this)" src="./img/delete.png" /></div>`;
     li.innerHTML = todoItems;
     listItems.appendChild(li);
-
-    let itemList = { item: todoValue.value, status: false };
+//add new to do item to the array 
+    let itemList = { item: todoValue.value.trim(), status: false };
     todo.push(itemList);
     setLocalStorage();
-  }
+//
   todoValue.value = "";
   setAlertMessage("Todo item Created Successfully!");
 }
 
 //READ data from local storage
 function ReadToDoItems() {
-  todo.forEach((element) => {
-    let li = document.createElement("li");
-    let style = "";
-    if (element.status) {
-      style = 'style="text-decoration: line-through"';
-    }
-    const todoItems = `<div ${style} title = "Hit Doudle Click and Complete" onclick = "completedToDoItems(this)">${
-      element.item
-    }
-    ${
-      style === ""
-        ? ""
-        : '<img class="todo-controls" src= "./img/check-mark.png"/>'
-    }</div>
-    <div>
-    ${
-      style === ""
-        ? '<img class="edit todo-controls" onclick = "UpdateToDoItems(this)" src="./img/pencil.png"/></div></div>'
-        : ""
-    }
-    <img class ="delete todo-controls" onclick="DeleteToDoItems(this)" src="./img/delete.png" /></div></div>`;
-    li.innerHTML = todoItems;
+  todo.forEach(item => {
+    const li = document.createElement("li");
+    const style = item.status ? 'style="text-decoration: line-through"' : '';
+    const checkMark = item.status ? '<img class="todo-controls" src="./img/check-mark.png"/>' : '';
+    const editIcon = !item.status ? '<img class="edit todo-controls" onclick="UpdateToDoItems(this)" src="./img/pencil.png"/>' : '';
+    
+    li.innerHTML = `
+      <div ${style} title="Double-click to complete" onclick="CompletedToDoItems(this)">
+        ${item.item} ${checkMark}
+      </div>
+      <div>
+        ${editIcon}
+        <img class="delete todo-controls" onclick="DeleteToDoItems(this)" src="./img/delete.png" />
+      </div>`;
     listItems.appendChild(li);
   });
 }
+//call the function
 ReadToDoItems();
 
 //update todo items
-function UpdateToDoItems(e) {
-  if (e.parentElement.querySelector("div").style.textDecoration === "") {
+function UpdateToDoItems(element) {
+  if (element.parentElement.querySelector("div").style.textDecoration === "") {
     todoValue.value =
-      e.parentElement.parentElement.querySelector("div").innerText;
-    updateText = e.parentElement.parentElement.querySelector("div");
+      element.parentElement.parentElement.querySelector("div").innerText;
+    updateText = element.parentElement.parentElement.querySelector("div");
     addUpdate.setAttribute("onclick", "UpdateOnSelectItems()");
     addUpdate.setAttribute("src", "./img/refresh.png");
     todoValue.focus();
   }
 }
 
-//update on selection
+//update the selected to do items 
 function UpdateOnSelectItems() {
   let IsPresent = false;
   todo.forEach((element) => {
-    if (element.item == todoValue.value) {
+    if (element.item == todoValue.value.trim()) {
       IsPresent = true;
     }
   });
@@ -104,17 +101,16 @@ function UpdateOnSelectItems() {
   });
   setLocalStorage();
 
-  updateText.innerText = todoValue.value;
-  addUpdate.setAttribute("oonclick", "CreateToDoItems()");
+  updateText.innerText = todoValue.value.trim();
+  addUpdate.setAttribute("onclick", "CreateToDoItems()");
   addUpdate.setAttribute("src", "./img/plus.png");
   todoValue.value = "";
   setAlertMessage("Todo item Updated Successfully!");
 }
 
-//Delete function
+//Delete function to delete a to do item 
 function DeleteToDoItems(e) {
-  let deleteValue =
-    e.parentElement.parentElement.querySelector("div").innerText;
+  let deleteValue = e.parentElement.parentElement.querySelector("div").innerText.trim();
   if (confirm(`Are you sure you want to delete this ${deleteValue}!`)) {
     e.parentElement.parentElement.setAttribute("class", "deleted-item");
     todoValue.focus();
