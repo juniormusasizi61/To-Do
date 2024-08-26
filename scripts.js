@@ -19,14 +19,7 @@ function CreateToDoItems() {
     return;
   }
   const IsPresent = todo.some(item=>item.item === todoValue.value.trim());
-  //  else {
-  //   let IsPresent = false;
-  //   todo.forEach((element) => {
-  //     if (element.item == todoValue.value) {
-  //       IsPresent = true;
-  //     }
-    // });
-
+ 
     if (IsPresent) {
       setAlertMessage("This item already present in the list!");
       return;
