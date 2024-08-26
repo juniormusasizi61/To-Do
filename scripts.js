@@ -52,7 +52,7 @@ function ReadToDoItems() {
   todo.forEach(item => {
     const li = document.createElement("li");
     const style = item.status ? 'style="text-decoration: line-through"' : '';
-    const checkMark = item.status ? '<img class="todo-controls" src="./img/check-mark.png"/>' : '';
+    const checkMark = item.status ? '<img class="todo-controls" src="./img/checkmark.png"/>' : '';
     const editIcon = !item.status ? '<img class="edit todo-controls" onclick="UpdateToDoItems(this)" src="./img/pencil.png"/>' : '';
     
     li.innerHTML = `
@@ -71,12 +71,11 @@ ReadToDoItems();
 
 //update todo items
 function UpdateToDoItems(element) {
-  if (element.parentElement.querySelector("div").style.textDecoration === "") {
-    todoValue.value =
-      element.parentElement.parentElement.querySelector("div").innerText;
+  if (element.parentElement.parentElement.querySelector("div").style.textDecoration === "") {
+    todoValue.value = element.parentElement.parentElement.querySelector("div").innerText;
     updateText = element.parentElement.parentElement.querySelector("div");
     addUpdate.setAttribute("onclick", "UpdateOnSelectItems()");
-    addUpdate.setAttribute("src", "./img/refresh.png");
+    addUpdate.setAttribute("src", "./img/refresh.jpeg");
     todoValue.focus();
   }
 }
@@ -108,11 +107,11 @@ function UpdateOnSelectItems() {
   setAlertMessage("Todo item Updated Successfully!");
 }
 
-//Delete function to delete a to do item 
-function DeleteToDoItems(e) {
-  let deleteValue = e.parentElement.parentElement.querySelector("div").innerText.trim();
+//delete a to do item 
+function DeleteToDoItems(element) {
+  let deleteValue = element.parentElement.parentElement.querySelector("div").innerText.trim();
   if (confirm(`Are you sure you want to delete this ${deleteValue}!`)) {
-    e.parentElement.parentElement.setAttribute("class", "deleted-item");
+    element.parentElement.parentElement.setAttribute("class", "deleted-item");
     todoValue.focus();
     todo.forEach((element) => {
       if (element.item == deleteValue.trim()) {
@@ -121,25 +120,25 @@ function DeleteToDoItems(e) {
     });
 
     setTimeout(() => {
-      e.parentElement.parentElement.remove();
+      element.parentElement.parentElement.remove();
     }, 1000);
     setLocalStorage();
   }
 }
 
 //completed todo items function
-function CompletedToDoItems(e) {
-  if (e.parentElement.querySelector("div").style.textDecoration === "") {
+function CompletedToDoItems(element) {
+  if (element.parentElement.querySelector("div").style.textDecoration === "") {
     const img = document.createElement("img");
-    img.src = "/images/check-mark.png";
+    img.src = "./img/checkmark.png";
     img.className = "todo-controls";
-    e.parentElement.querySelector("div").style.textDecoration = "line-through";
-    e.parentElement.querySelector("div").appendChild(img);
-    e.parentElement.querySelector("img.edit").remove();
+    element.parentElement.querySelector("div").style.textDecoration = "line-through";
+    element.parentElement.querySelector("div").appendChild(img);
+    element.parentElement.querySelector("img.edit").remove();
 
     todo.forEach((element) => {
       if (
-        e.parentElement.querySelector("div").innerText.trim() == element.item
+        element.parentElement.querySelector("div").innerText.trim() == element.item
       ) {
         element.status = true;
       }
